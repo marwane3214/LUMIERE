@@ -9,7 +9,6 @@ import Products from '@/sections/Products';
 import Categories from '@/sections/Categories';
 import Testimonials from '@/sections/Testimonials';
 import Footer from '@/sections/Footer';
-import Packs from '@/sections/Packs';
 import Events from '@/sections/Events';
 import CartDrawer from '@/components/CartDrawer';
 import AuthModal from '@/components/AuthModal';
