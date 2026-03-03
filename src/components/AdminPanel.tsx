@@ -174,11 +174,13 @@ function ProductsTab() {
     useEffect(() => { load(); }, [load]);
 
     const filtered = products.filter((p) =>
-        p.name.toLowerCase().includes(search.toLowerCase()) ||
-        (p.name_fr ?? '').toLowerCase().includes(search.toLowerCase())
+        p.category !== 'events' && (
+            p.name.toLowerCase().includes(search.toLowerCase()) ||
+            (p.name_fr ?? '').toLowerCase().includes(search.toLowerCase())
+        )
     );
 
-    const featuredCount = products.filter(p => p.featured).length;
+    const featuredCount = products.filter(p => p.featured && p.category !== 'events').length;
 
     const openNew = () => { setForm(emptyProduct()); setEditingId(null); setShowForm(true); setError(''); };
 
@@ -495,15 +497,16 @@ function ProductsTab() {
 function NewOrderForm({ onClose, onCreated, products }: {
     onClose: () => void; onCreated: () => void; products: Product[];
 }) {
+    const availableProducts = products.filter(p => p.category !== 'events');
     const [form, setForm] = useState({
         customer_name: '', customer_phone: '', customer_address: '',
         customer_city: MOROCCAN_CITIES[0], notes: '',
-        selectedProductId: products[0]?.id ?? '', quantity: 1,
+        selectedProductId: availableProducts[0]?.id ?? '', quantity: 1,
     });
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState('');
 
-    const selectedProduct = products.find((p) => p.id === form.selectedProductId);
+    const selectedProduct = availableProducts.find((p) => p.id === form.selectedProductId);
 
     const handleCreate = async () => {
         if (!form.customer_name || !form.customer_phone || !form.customer_address) {
@@ -562,7 +565,7 @@ function NewOrderForm({ onClose, onCreated, products }: {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div className="relative">
                                 <select className="admin-input appearance-none pr-8" value={form.selectedProductId} onChange={(e) => setForm({ ...form, selectedProductId: e.target.value })}>
-                                    {products.map((p) => <option key={p.id} value={p.id}>{p.name} — {formatDH(p.price)}</option>)}
+                                    {availableProducts.map((p) => <option key={p.id} value={p.id}>{p.name} — {formatDH(p.price)}</option>)}
                                 </select>
                                 <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-white/30 pointer-events-none" />
                             </div>
@@ -769,6 +772,7 @@ function DashboardTab({ setTab }: { setTab: (t: Tab) => void }) {
         });
     }, []);
 
+    const regularProducts = products.filter(p => p.category !== 'events');
     const revenue = orders.filter((o) => o.status !== 'cancelled').reduce((s, o) => s + o.total_price, 0);
     const pendingOrders = orders.filter((o) => o.status === 'pending');
     const recentOrders = [...orders].slice(0, 5);
@@ -778,7 +782,7 @@ function DashboardTab({ setTab }: { setTab: (t: Tab) => void }) {
     return (
         <div className="space-y-6">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <StatCard icon={Package} label="Produits" value={String(products.length)} color="#d4af37" />
+                <StatCard icon={Package} label="Produits" value={String(regularProducts.length)} color="#d4af37" />
                 <StatCard icon={ShoppingBag} label="Commandes" value={String(orders.length)} color="#60a5fa" />
                 <StatCard icon={TrendingUp} label="Revenu total" value={formatDH(revenue)} color="#4ade80" />
                 <StatCard icon={Clock} label="En attente" value={String(pendingOrders.length)} color="#fbbf24" />
