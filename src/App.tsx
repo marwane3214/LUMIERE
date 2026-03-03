@@ -7,7 +7,7 @@ import Navigation from '@/sections/Navigation';
 import Hero from '@/sections/Hero';
 import Products from '@/sections/Products';
 import Categories from '@/sections/Categories';
-import Testimonials from '@/sections/Testimonials';
+// import Testimonials from '@/sections/Testimonials';
 import Footer from '@/sections/Footer';
 import Events from '@/sections/Events';
 import CartDrawer from '@/components/CartDrawer';
@@ -145,7 +145,7 @@ function AppContent() {
         <Hero />
         <Products />
         <Categories onCategoryClick={(slug) => navigate(`/category/${slug}`)} />
-        <Testimonials />
+        {/* <Testimonials /> */}
         <Events onEventClick={(id) => navigate(`/event/${id}`)} />
       </main>
       <Footer />
