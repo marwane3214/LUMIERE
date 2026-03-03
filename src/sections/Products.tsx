@@ -263,11 +263,11 @@ export default function Products() {
         )}
 
         {/* View All Button */}
-        <div className="text-center mt-12">
+        {/* <div className="text-center mt-12">
           <button className="btn-primary font-body text-sm tracking-[0.15em] uppercase">
             {t('products.cta')}
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Product Modal */}
