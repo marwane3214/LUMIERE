@@ -230,17 +230,17 @@ export default function Products() {
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
 
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                    {/* Overlay — always visible on touch, hover on desktop */}
+                    <div className="absolute inset-0 bg-black/60 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
                       <button
                         onClick={() => { setSelectedProduct(product); setSelectedSize(''); }}
-                        className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-[#d4af37] hover:text-black transition-all duration-300 transform translate-y-4 group-hover:translate-y-0"
+                        className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-[#d4af37] hover:text-black transition-all duration-300 md:transform md:translate-y-4 md:group-hover:translate-y-0"
                       >
                         <Eye className="w-5 h-5" />
                       </button>
                       <button
                         onClick={() => addToCart(product)}
-                        className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-[#d4af37] hover:text-black transition-all duration-300 transform translate-y-4 group-hover:translate-y-0 delay-75"
+                        className="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-[#d4af37] hover:text-black transition-all duration-300 md:transform md:translate-y-4 md:group-hover:translate-y-0 delay-75"
                       >
                         <ShoppingBag className="w-5 h-5" />
                       </button>
@@ -273,24 +273,25 @@ export default function Products() {
       {/* Product Modal */}
       {selectedProduct && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center sm:p-4 bg-black/90 backdrop-blur-md animate-fade-in"
           onClick={() => setSelectedProduct(null)}
         >
           <div
-            className="bg-[#050505] rounded-2xl max-w-5xl w-full overflow-hidden border border-white/10 shadow-[0_0_50px_rgba(0,0,0,1)] relative"
+            className="bg-[#050505] rounded-t-2xl sm:rounded-2xl max-w-5xl w-full max-h-[92vh] overflow-y-auto border border-white/10 shadow-[0_0_50px_rgba(0,0,0,1)] relative"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setSelectedProduct(null)}
-              className="absolute top-6 right-6 z-10 w-10 h-10 rounded-full bg-black/40 text-white/60 hover:text-white hover:bg-black/60 transition-all flex items-center justify-center border border-white/10"
+              className="sticky top-4 right-4 float-right z-10 w-10 h-10 rounded-full bg-black/60 text-white/80 hover:text-white hover:bg-black/80 transition-all flex items-center justify-center border border-white/10 mr-4 mt-4"
             >
               <X className="w-5 h-5" />
             </button>
+            <div className="clear-both" />
 
             <div className="grid md:grid-cols-2">
               {/* Left: Image Gallery */}
-              <div className="space-y-4 p-6 bg-[#0a0a0a]">
-                <div className="aspect-[4/5] rounded-xl overflow-hidden border border-white/5 shadow-2xl">
+              <div className="space-y-3 p-4 md:p-6 bg-[#0a0a0a]">
+                <div className="aspect-square md:aspect-[4/5] rounded-xl overflow-hidden border border-white/5 shadow-2xl">
                   <img
                     id="main-preview-img"
                     src={selectedProduct.image}
@@ -299,7 +300,7 @@ export default function Products() {
                   />
                 </div>
                 {/* Thumbnails */}
-                <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-none">
+                <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none">
                   {[selectedProduct.image, ...(selectedProduct.images || [])].map((img, i) => (
                     <button
                       key={i}
@@ -307,7 +308,7 @@ export default function Products() {
                         const main = document.getElementById('main-preview-img') as HTMLImageElement;
                         if (main) main.src = img;
                       }}
-                      className="w-20 h-20 rounded-lg overflow-hidden border border-white/10 hover:border-[#d4af37] transition-all shrink-0 opacity-60 hover:opacity-100"
+                      className="w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden border border-white/10 hover:border-[#d4af37] transition-all shrink-0 opacity-60 hover:opacity-100"
                     >
                       <img src={img} className="w-full h-full object-cover" alt="" />
                     </button>
@@ -316,9 +317,9 @@ export default function Products() {
               </div>
 
               {/* Right: Info */}
-              <div className="p-8 md:p-12 flex flex-col justify-center space-y-8">
+              <div className="p-5 md:p-12 flex flex-col justify-center space-y-5 md:space-y-8">
                 <div>
-                  <div className="flex items-center gap-3 mb-4">
+                  <div className="flex items-center gap-3 mb-3">
                     <span className="px-3 py-1 rounded-full text-[10px] tracking-[0.2em] font-bold uppercase bg-[#d4af37]/10 text-[#d4af37] border border-[#d4af37]/20">
                       {selectedProduct.category}
                     </span>
@@ -328,19 +329,19 @@ export default function Products() {
                       </span>
                     )}
                   </div>
-                  <h3 className="font-display text-4xl md:text-5xl text-white mb-2 leading-tight">
+                  <h3 className="font-display text-2xl md:text-4xl lg:text-5xl text-white mb-2 leading-tight">
                     {getProductName(selectedProduct)}
                   </h3>
-                  <div className="w-20 h-[1px] bg-gradient-to-r from-[#d4af37] to-transparent mb-6"></div>
-                  <p className="font-body text-white/60 text-lg leading-relaxed max-w-md">
+                  <div className="w-16 md:w-20 h-[1px] bg-gradient-to-r from-[#d4af37] to-transparent mb-4 md:mb-6"></div>
+                  <p className="font-body text-white/60 text-sm md:text-lg leading-relaxed max-w-md">
                     {i18n.language === 'fr' ? selectedProduct.description_fr : (i18n.language === 'ar' ? selectedProduct.description_ar : selectedProduct.description)}
                   </p>
                 </div>
 
-                <div className="space-y-6">
+                <div className="space-y-4 md:space-y-6">
                   <div className="flex items-baseline gap-2">
                     <span className="text-white/40 text-sm font-body">Price:</span>
-                    <span className="font-display text-4xl text-[#d4af37]">
+                    <span className="font-display text-3xl md:text-4xl text-[#d4af37]">
                       {selectedProduct.price.toLocaleString()} DH
                     </span>
                   </div>
@@ -377,14 +378,14 @@ export default function Products() {
                         setSelectedSize('');
                       }}
                       disabled={selectedProduct.category === 'rings' && !selectedSize}
-                      className="flex-1 btn-primary py-5 rounded-full font-bold tracking-[0.2em] uppercase text-xs flex items-center justify-center gap-3 group disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="flex-1 btn-primary py-4 md:py-5 rounded-full font-bold tracking-[0.2em] uppercase text-xs flex items-center justify-center gap-3 group disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <ShoppingBag className="w-4 h-4 group-hover:scale-110 transition-transform" />
                       {selectedProduct.category === 'rings' && !selectedSize ? 'Select a Size' : t('products.addToCart')}
                     </button>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4 pt-6 border-t border-white/5">
+                  <div className="grid grid-cols-2 gap-4 pt-4 md:pt-6 border-t border-white/5">
                     <div className="flex flex-col">
                       <span className="text-[10px] text-white/30 uppercase tracking-widest font-bold mb-1">Livraison</span>
                       <span className="text-xs text-white/70">Partout au Maroc</span>
