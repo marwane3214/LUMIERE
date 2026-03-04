@@ -64,6 +64,8 @@ export default function Categories({ onCategoryClick }: { onCategoryClick?: (slu
     // Only run GSAP horizontal scroll on desktop (md = 768px+)
     if (window.innerWidth < 768) return;
 
+    const isRTL = document.dir === 'rtl';
+
     const ctx = gsap.context(() => {
       const scrollTriggers: ScrollTrigger[] = [];
 
@@ -72,7 +74,7 @@ export default function Categories({ onCategoryClick }: { onCategoryClick?: (slu
         const totalWidth = cardsRef.current.scrollWidth - window.innerWidth;
 
         const horizontalScroll = gsap.to(cardsRef.current, {
-          x: -totalWidth,
+          x: isRTL ? totalWidth : -totalWidth,
           ease: 'none',
           scrollTrigger: {
             trigger: containerRef.current,
@@ -89,16 +91,21 @@ export default function Categories({ onCategoryClick }: { onCategoryClick?: (slu
         }
 
         cards.forEach((card) => {
+          const img = card.querySelector('img');
           scrollTriggers.push(
             ScrollTrigger.create({
               trigger: card,
               containerAnimation: horizontalScroll,
-              start: 'left 80%',
-              end: 'left 20%',
+              start: 'left 100%',
+              end: 'right 0%',
               scrub: 1.5,
               onUpdate: (self) => {
-                const scale = 0.9 + self.progress * 0.1;
+                const scale = 0.95 + self.progress * 0.05;
                 gsap.set(card, { scale });
+                if (img) {
+                  // Parallax effect for the image inside the card
+                  gsap.set(img, { x: (self.progress - 0.5) * 40 });
+                }
               },
             })
           );
