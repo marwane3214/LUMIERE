@@ -22,7 +22,7 @@ export default function Hero() {
         opacity: 0,
         y: 60,
       });
-      
+
       if (titleRef.current) {
         const letters = titleRef.current.querySelectorAll('.letter');
         gsap.set(letters, {
@@ -199,7 +199,7 @@ export default function Hero() {
 
         <button
           ref={ctaRef}
-          onClick={() => document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' })}
+          onClick={() => window.location.href = '/#products'}
           className="btn-primary btn-glow font-body text-sm tracking-[0.2em] uppercase"
         >
           {t('hero.cta')}

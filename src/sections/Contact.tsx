@@ -75,7 +75,7 @@ export default function Contact() {
                     <div className="relative">
                         <div className="p-10 rounded-3xl bg-white/[0.03] border border-white/10 backdrop-blur-sm">
                             <h3 className="font-display text-3xl text-white mb-8 text-center">
-                                {t('contact.form.title')}
+                                {t('')}
                             </h3>
                             <form onSubmit={handleSubmit} className="space-y-6">
                                 <div>

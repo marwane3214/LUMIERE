@@ -34,8 +34,8 @@ export default function Navigation() {
   };
 
   const navLinks = [
-    { href: '#home', label: t('nav.home') },
-    { href: '#products', label: t('nav.shop') },
+    { href: '/#home', label: t('nav.home') },
+    { href: '/#products', label: t('nav.shop') },
   ];
 
   return (
@@ -49,7 +49,7 @@ export default function Navigation() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <a
-            href="#home"
+            href="/"
             className="relative group perspective-1000"
           >
             <span className="font-display text-2xl md:text-3xl tracking-[0.2em] text-white transition-transform duration-600 inline-block group-hover:rotate-y-180">

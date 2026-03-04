@@ -97,7 +97,10 @@ export default function CTA() {
           {t('cta.description')}
         </p>
 
-        <button className="animate-item btn-primary btn-glow font-body text-sm tracking-[0.2em] uppercase">
+        <button
+          onClick={() => window.location.href = '/#products'}
+          className="animate-item btn-primary btn-glow font-body text-sm tracking-[0.2em] uppercase"
+        >
           {t('cta.button')}
         </button>
       </div>

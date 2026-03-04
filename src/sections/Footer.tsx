@@ -58,7 +58,7 @@ export default function Footer() {
         {/* Logo & Tagline */}
         <div className="animate-item text-center mb-16">
           <a
-            href="#home"
+            href="/"
             className="inline-block font-display text-4xl md:text-5xl text-white tracking-[0.2em] mb-4 hover:text-[#d4af37] transition-colors duration-300"
           >
             LUMIÈRE
