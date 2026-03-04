@@ -85,7 +85,7 @@ export default function AdminLogin({ onSuccess }: AdminLoginProps) {
                             className="w-16 h-px my-3"
                             style={{ background: 'linear-gradient(90deg, transparent, #d4af37, transparent)' }}
                         />
-                        <p className="text-white/40 text-sm tracking-widest uppercase">Pure Perfumes</p>
+                        <p className="text-white/40 text-sm tracking-widest uppercase">Luxury Jewelry</p>
                     </div>
 
                     {/* Form */}

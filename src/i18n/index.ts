@@ -114,6 +114,21 @@ const resources = {
         remove: 'Remove',
         quantity: 'Quantity',
       },
+      contact: {
+        subtitle: 'Contact Us',
+        title: 'Get in Touch',
+        description: 'Have a question or want to discuss a custom piece? We’d love to hear from you.',
+        form: {
+          name: 'Your Name',
+          email: 'Your Email',
+          subject: 'Subject',
+          message: 'Your Message',
+          send: 'Send Message',
+          sending: 'Sending...',
+          success: 'Message sent successfully! We will get back to you soon.',
+          error: 'Failed to send message. Please try again.',
+        },
+      },
       common: {
         loading: 'Loading...',
         error: 'An error occurred',

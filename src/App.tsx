@@ -18,6 +18,10 @@ import Checkout from '@/components/Checkout';
 import CategoryPage from '@/components/CategoryPage';
 import EventPage from '@/components/EventPage';
 
+import CustomCursor from '@/components/CustomCursor';
+
+import Contact from '@/sections/Contact';
+
 // ── Route detection ───────────────────────────────────────────────────────
 const getPath = () => window.location.pathname;
 
@@ -100,12 +104,18 @@ function AppContent() {
   }
 
   if (currentPath === '/admin') {
-    return <AdminShell />;
+    return (
+      <>
+        <CustomCursor />
+        <AdminShell />
+      </>
+    );
   }
 
   if (currentPath === '/checkout') {
     return (
       <div className="bg-black min-h-screen text-white">
+        <CustomCursor />
         <Checkout
           onBack={() => navigate('/')}
           onSuccess={() => navigate('/')}
@@ -118,8 +128,21 @@ function AppContent() {
     const slug = currentPath.replace('/category/', '');
     return (
       <div className="bg-black min-h-screen text-white overflow-x-hidden">
+        <CustomCursor />
         <Navigation />
         <CategoryPage slug={slug} onBack={() => navigate('/')} />
+        <Footer />
+        <CartDrawer onCheckout={() => navigate('/checkout')} />
+      </div>
+    );
+  }
+
+  if (currentPath === '/contact') {
+    return (
+      <div className="bg-black min-h-screen text-white overflow-x-hidden">
+        <CustomCursor />
+        <Navigation />
+        <Contact />
         <Footer />
         <CartDrawer onCheckout={() => navigate('/checkout')} />
       </div>
@@ -130,6 +153,7 @@ function AppContent() {
     const id = currentPath.replace('/event/', '');
     return (
       <div className="bg-black min-h-screen text-white overflow-x-hidden">
+        <CustomCursor />
         <Navigation />
         <EventPage eventId={id} onBack={() => navigate('/')} />
         <Footer />
@@ -140,6 +164,7 @@ function AppContent() {
 
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
+      <CustomCursor />
       <Navigation />
       <main>
         <Hero />

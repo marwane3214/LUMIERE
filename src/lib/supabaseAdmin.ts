@@ -247,3 +247,52 @@ export async function sbUploadImage(file: File): Promise<string | null> {
     return publicUrl;
 }
 
+
+export interface ContactMessage {
+    id: string;
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+    status: 'unread' | 'read';
+    created_at: string;
+}
+
+export async function sbGetMessages(): Promise<ContactMessage[]> {
+    const { data, error } = await supabase
+        .from('contact_messages')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        console.error('[admin] getMessages:', error.message);
+        return [];
+    }
+    return (data ?? []) as ContactMessage[];
+}
+
+export async function sbUpdateMessageStatus(id: string, status: ContactMessage['status']): Promise<boolean> {
+    const { error } = await supabase
+        .from('contact_messages')
+        .update({ status })
+        .eq('id', id);
+
+    if (error) {
+        console.error('[admin] updateMessageStatus:', error.message);
+        return false;
+    }
+    return true;
+}
+
+export async function sbDeleteMessage(id: string): Promise<boolean> {
+    const { error } = await supabase
+        .from('contact_messages')
+        .delete()
+        .eq('id', id);
+
+    if (error) {
+        console.error('[admin] deleteMessage:', error.message);
+        return false;
+    }
+    return true;
+}

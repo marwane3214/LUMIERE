@@ -94,81 +94,19 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Links Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-16">
-          {/* Shop */}
-          <div className="animate-item">
-            <h4 className="font-display text-lg text-white mb-6">
-              {t('footer.shop')}
-            </h4>
+        {/* Links Grid - Simplified */}
+        <div className="flex justify-center mb-16 max-w-6xl mx-auto">
+          {/* Contact Link Only */}
+          <div className="animate-item text-center">
             <ul className="space-y-3">
-              {shopLinks.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="font-body text-sm text-white/60 hover:text-[#d4af37] hover:translate-x-1 transition-all duration-300 inline-block"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div className="animate-item">
-            <h4 className="font-display text-lg text-white mb-6">
-              {t('footer.company')}
-            </h4>
-            <ul className="space-y-3">
-              {companyLinks.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="font-body text-sm text-white/60 hover:text-[#d4af37] hover:translate-x-1 transition-all duration-300 inline-block"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Support */}
-          <div className="animate-item">
-            <h4 className="font-display text-lg text-white mb-6">
-              {t('footer.support')}
-            </h4>
-            <ul className="space-y-3">
-              {supportLinks.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="font-body text-sm text-white/60 hover:text-[#d4af37] hover:translate-x-1 transition-all duration-300 inline-block"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div className="animate-item">
-            <h4 className="font-display text-lg text-white mb-6">
-              {t('footer.contact')}
-            </h4>
-            <ul className="space-y-3">
-              {contactLinks.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className="font-body text-sm text-white/60 hover:text-[#d4af37] hover:translate-x-1 transition-all duration-300 inline-block"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <a
+                  href="/contact"
+                  className="font-body text-sm text-white/60 hover:text-[#d4af37] border-b border-transparent hover:border-[#d4af37] transition-all duration-300 inline-block uppercase tracking-widest"
+                >
+                  {t('footer.links.contactUs')}
+                </a>
+              </li>
             </ul>
           </div>
         </div>

@@ -3,13 +3,13 @@ import {
     LayoutDashboard, Package, ShoppingBag, LogOut, Plus, Pencil, Trash2,
     Search, X, Check, ChevronDown, Star, AlertCircle, TrendingUp,
     DollarSign, Clock, ChevronRight, Save, Image as ImageIcon, ShieldCheck, Loader2,
-    Gift
+    Gift, Mail
 } from 'lucide-react';
-import type { Product, Order } from '@/types';
+import type { Product, Order, ContactMessage } from '@/types';
 import {
     sbGetProducts, sbAddProduct, sbUpdateProduct, sbDeleteProduct,
     sbGetOrders, sbAddOrder, sbUpdateOrderStatus, sbDeleteOrder,
-    sbUploadImage
+    sbUploadImage, sbGetMessages, sbUpdateMessageStatus, sbDeleteMessage
 } from '@/lib/supabaseAdmin';
 
 // ──────────────────────────────────────────────────────────────────────────
@@ -1038,10 +1038,92 @@ function EventsTab() {
     );
 }
 
+function MessagesTab() {
+    const [messages, setMessages] = useState<ContactMessage[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [toast, setToast] = useState('');
+
+    useEffect(() => {
+        loadMessages();
+    }, []);
+
+    async function loadMessages() {
+        setLoading(true);
+        const data = await sbGetMessages();
+        setMessages(data);
+        setLoading(false);
+    }
+
+    async function toggleRead(msg: ContactMessage) {
+        const newStatus = msg.status === 'unread' ? 'read' : 'unread';
+        const success = await sbUpdateMessageStatus(msg.id, newStatus);
+        if (success) {
+            setMessages(messages.map(m => m.id === msg.id ? { ...m, status: newStatus } : m));
+        }
+    }
+
+    async function handleDelete(id: string) {
+        if (!confirm('Supprimer ce message ?')) return;
+        const success = await sbDeleteMessage(id);
+        if (success) {
+            setMessages(messages.filter(m => m.id !== id));
+            setToast('Message supprimé');
+            setTimeout(() => setToast(''), 3000);
+        }
+    }
+
+    if (loading) return <div className="flex h-64 items-center justify-center"><Loader2 className="w-8 h-8 animate-spin text-[#d4af37]" /></div>;
+
+    return (
+        <div className="space-y-6">
+            <div className="grid gap-4">
+                {messages.length === 0 ? (
+                    <div className="text-center py-20 bg-white/5 rounded-2xl border border-dashed border-white/10">
+                        <Mail className="w-12 h-12 text-white/10 mx-auto mb-4" />
+                        <p className="text-white/30 tracking-widest uppercase text-sm font-bold">Aucun message</p>
+                    </div>
+                ) : (
+                    messages.map((msg) => (
+                        <div key={msg.id} className={`p-6 rounded-2xl border transition-all duration-300 ${msg.status === 'unread' ? 'bg-[#d4af37]/5 border-[#d4af37]/20 shadow-lg shadow-[#d4af37]/5' : 'bg-white/5 border-white/10 opacity-70'}`}>
+                            <div className="flex flex-col md:flex-row justify-between gap-4">
+                                <div className="flex-1">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <h3 className="text-white font-bold">{msg.name}</h3>
+                                        <span className="text-white/20 text-xs">•</span>
+                                        <span className="text-white/40 text-xs font-mono">{msg.email}</span>
+                                        {msg.status === 'unread' && <span className="px-2 py-0.5 rounded-full bg-[#d4af37] text-black text-[10px] font-bold uppercase tracking-wider">Nouveau</span>}
+                                    </div>
+                                    <h4 className="text-[#d4af37] font-medium text-sm mb-3 uppercase tracking-wider">{msg.subject}</h4>
+                                    <div className="p-4 rounded-xl bg-black/40 text-white/70 text-sm leading-relaxed whitespace-pre-wrap">
+                                        {msg.message}
+                                    </div>
+                                </div>
+                                <div className="flex md:flex-col gap-2 justify-end">
+                                    <button onClick={() => toggleRead(msg)} className="p-2.5 rounded-xl bg-white/5 text-white/60 hover:text-white hover:bg-white/10 transition-all" title={msg.status === 'unread' ? 'Marquer comme lu' : 'Marquer comme non lu'}>
+                                        <ShieldCheck className={`w-5 h-5 ${msg.status === 'read' ? 'text-green-500' : ''}`} />
+                                    </button>
+                                    <button onClick={() => handleDelete(msg.id)} className="p-2.5 rounded-xl bg-white/5 text-red-400/60 hover:text-red-400 hover:bg-red-400/10 transition-all">
+                                        <Trash2 className="w-5 h-5" />
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="mt-4 flex items-center gap-2 text-[10px] text-white/20 uppercase tracking-widest font-bold">
+                                <Clock className="w-3 h-3" />
+                                {new Date(msg.created_at).toLocaleString()}
+                            </div>
+                        </div>
+                    ))
+                )}
+            </div>
+            {toast && <div className="fixed bottom-8 right-8 px-6 py-3 bg-[#d4af37] text-black rounded-full font-bold shadow-2xl animate-fade-up z-[60] text-sm uppercase tracking-widest">{toast}</div>}
+        </div>
+    );
+}
+
 // ══════════════════════════════════════════════════════════════════════════
 // Main Admin Panel
 // ══════════════════════════════════════════════════════════════════════════
-type Tab = 'dashboard' | 'products' | 'orders' | 'events';
+type Tab = 'dashboard' | 'products' | 'orders' | 'events' | 'messages';
 
 interface AdminPanelProps { onLogout: () => void; }
 
@@ -1053,6 +1135,7 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
         { id: 'products', label: 'Produits', icon: Package },
         { id: 'events', label: 'Événements', icon: Gift },
         { id: 'orders', label: 'Commandes', icon: ShoppingBag },
+        { id: 'messages', label: 'Messages', icon: Mail },
     ];
 
     return (
@@ -1102,6 +1185,7 @@ export default function AdminPanel({ onLogout }: AdminPanelProps) {
                 {tab === 'products' && <ProductsTab />}
                 {tab === 'events' && <EventsTab />}
                 {tab === 'orders' && <OrdersTab />}
+                {tab === 'messages' && <MessagesTab />}
             </main>
 
             <style>{`
