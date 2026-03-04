@@ -6,7 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -43,17 +44,19 @@ export default function Hero() {
         ease: 'expo.out',
       });
 
-      // Title letters stagger
+      // Title animation (letters stagger for Latin, whole title for Arabic)
       if (titleRef.current) {
         const letters = titleRef.current.querySelectorAll('.letter');
+        const elementsToAnimate = letters.length > 0 ? letters : titleRef.current;
+
         tl.to(
-          letters,
+          elementsToAnimate,
           {
             opacity: 1,
             y: 0,
             rotateX: 0,
             duration: 0.8,
-            stagger: 0.08,
+            stagger: letters.length > 0 ? 0.08 : 0,
             ease: 'expo.out',
           },
           '-=0.5'
@@ -177,17 +180,21 @@ export default function Hero() {
 
         <h1
           ref={titleRef}
-          className="font-display text-6xl md:text-8xl lg:text-9xl text-white tracking-[0.15em] mb-8 perspective-1200"
+          className={`font-display text-6xl md:text-8xl lg:text-9xl text-white mb-8 perspective-1200 ${isArabic ? '' : 'tracking-[0.15em]'}`}
         >
-          {titleLetters.map((letter, index) => (
-            <span
-              key={index}
-              className="letter inline-block preserve-3d"
-              style={{ display: letter === ' ' ? 'inline' : 'inline-block' }}
-            >
-              {letter === ' ' ? '\u00A0' : letter}
-            </span>
-          ))}
+          {isArabic ? (
+            t('hero.title')
+          ) : (
+            titleLetters.map((letter, index) => (
+              <span
+                key={index}
+                className="letter inline-block preserve-3d"
+                style={{ display: letter === ' ' ? 'inline' : 'inline-block' }}
+              >
+                {letter === ' ' ? '\u00A0' : letter}
+              </span>
+            ))
+          )}
         </h1>
 
         <p

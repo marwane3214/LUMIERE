@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Great+Vibes&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Cairo:wght@200;300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Great+Vibes&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -26,7 +26,7 @@
     --input: 0 0% 15%;
     --ring: 45 65% 52%;
     --radius: 0.5rem;
-    
+
     /* Custom Colors */
     --gold: #d4af37;
     --gold-dark: #b8941f;
@@ -36,7 +36,7 @@
     --medium-gray: #2d2d2d;
     --light-gray: #f5f5f5;
     --text-gray: #666666;
-    
+
     /* Animation Easings */
     --ease-liquid: cubic-bezier(0.23, 1, 0.32, 1);
     --ease-dramatic: cubic-bezier(0.87, 0, 0.13, 1);
@@ -52,30 +52,35 @@
   * {
     @apply border-border;
   }
-  
+
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
     @apply bg-black text-white antialiased;
     font-family: 'Montserrat', sans-serif;
     overflow-x: hidden;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: 'Cormorant Garamond', serif;
     font-weight: 300;
   }
-  
+
   .font-script {
     font-family: 'Great Vibes', cursive;
   }
-  
+
   .font-display {
     font-family: 'Cormorant Garamond', serif;
   }
-  
+
   .font-body {
     font-family: 'Montserrat', sans-serif;
   }
@@ -88,99 +93,104 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  
+
   .gold-border {
     border: 1px solid var(--gold);
   }
-  
+
   .gold-bg {
     background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
   }
-  
+
   .btn-primary {
     @apply px-8 py-3 border border-[#d4af37] text-[#d4af37] bg-transparent transition-all duration-300;
   }
-  
+
   .btn-primary:hover {
     @apply bg-[#d4af37] text-black;
     box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
   }
-  
+
   .btn-glow {
     animation: glow-pulse 3s ease-in-out infinite;
   }
-  
+
   @keyframes glow-pulse {
-    0%, 100% {
+
+    0%,
+    100% {
       box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
     }
+
     50% {
       box-shadow: 0 0 40px rgba(212, 175, 55, 0.6);
     }
   }
-  
+
   .shimmer {
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(212, 175, 55, 0.1) 50%,
-      transparent 100%
-    );
+    background: linear-gradient(90deg,
+        transparent 0%,
+        rgba(212, 175, 55, 0.1) 50%,
+        transparent 100%);
     background-size: 200% 100%;
     animation: shimmer 8s linear infinite;
   }
-  
+
   @keyframes shimmer {
     0% {
       background-position: -200% 0;
     }
+
     100% {
       background-position: 200% 0;
     }
   }
-  
+
   .float-animation {
     animation: float 6s ease-in-out infinite;
   }
-  
+
   @keyframes float {
-    0%, 100% {
+
+    0%,
+    100% {
       transform: translateY(0px);
     }
+
     50% {
       transform: translateY(-15px);
     }
   }
-  
+
   .text-reveal {
     clip-path: inset(0 100% 0 0);
     animation: text-reveal 0.8s var(--ease-expo-out) forwards;
   }
-  
+
   @keyframes text-reveal {
     to {
       clip-path: inset(0 0 0 0);
     }
   }
-  
+
   .card-3d {
     transform-style: preserve-3d;
     perspective: 800px;
   }
-  
+
   .card-3d-inner {
     transition: transform 0.4s var(--ease-smooth);
     transform-style: preserve-3d;
   }
-  
+
   .card-3d:hover .card-3d-inner {
     transform: rotateY(5deg) rotateX(5deg) scale(1.02);
   }
-  
+
   .underline-grow {
     position: relative;
   }
-  
+
   .underline-grow::after {
     content: '';
     position: absolute;
@@ -192,15 +202,15 @@
     transition: all 0.3s var(--ease-expo-out);
     transform: translateX(-50%);
   }
-  
+
   .underline-grow:hover::after {
     width: 100%;
   }
-  
+
   .section-padding {
     @apply px-4 sm:px-6 lg:px-8 xl:px-16 2xl:px-24;
   }
-  
+
   .glass-effect {
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(10px);
@@ -212,23 +222,23 @@
   .perspective-1000 {
     perspective: 1000px;
   }
-  
+
   .perspective-1200 {
     perspective: 1200px;
   }
-  
+
   .preserve-3d {
     transform-style: preserve-3d;
   }
-  
+
   .backface-hidden {
     backface-visibility: hidden;
   }
-  
+
   .rotate-y-180 {
     transform: rotateY(180deg);
   }
-  
+
   .translate-z-50 {
     transform: translateZ(50px);
   }
@@ -237,6 +247,21 @@
 /* RTL Support */
 [dir="rtl"] {
   text-align: right;
+  font-family: 'Cairo', sans-serif;
+}
+
+[dir="rtl"] h1,
+[dir="rtl"] h2,
+[dir="rtl"] h3,
+[dir="rtl"] h4,
+[dir="rtl"] h5,
+[dir="rtl"] h6,
+[dir="rtl"] .font-display {
+  font-family: 'Amiri', serif;
+}
+
+[dir="rtl"] .font-body {
+  font-family: 'Cairo', sans-serif;
 }
 
 [dir="rtl"] .rtl-flip {
@@ -269,7 +294,10 @@
 
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

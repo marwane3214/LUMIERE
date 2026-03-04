@@ -51,7 +51,7 @@ function AdminShell() {
 // Main store content
 // ══════════════════════════════════════════════════════════════════════════
 function AppContent() {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPath, setCurrentPath] = useState(getPath());
@@ -92,8 +92,8 @@ function AppContent() {
     return (
       <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
         <div className="text-center">
-          <h1 className="font-display text-4xl text-[#d4af37] tracking-[0.3em] animate-pulse">
-            LUMIÈRE
+          <h1 className={`font-display text-4xl text-[#d4af37] animate-pulse ${i18n.language === 'ar' ? '' : 'tracking-[0.3em]'}`}>
+            {i18n.language === 'ar' ? t('hero.title') : 'LUMIÈRE'}
           </h1>
           <div className="mt-4 w-32 h-[2px] bg-white/20 mx-auto overflow-hidden">
             <div className="w-full h-full bg-[#d4af37] animate-[shimmer_1s_infinite]"></div>

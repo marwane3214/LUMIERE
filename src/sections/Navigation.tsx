@@ -33,6 +33,7 @@ export default function Navigation() {
     setIsLangMenuOpen(false);
   };
 
+  const isArabic = i18n.language === 'ar';
   const navLinks = [
     { href: '/#home', label: t('nav.home') },
     { href: '/#products', label: t('nav.shop') },
@@ -52,8 +53,8 @@ export default function Navigation() {
             href="/"
             className="relative group perspective-1000"
           >
-            <span className="font-display text-2xl md:text-3xl tracking-[0.2em] text-white transition-transform duration-600 inline-block group-hover:rotate-y-180">
-              LUMIÈRE
+            <span className={`font-display text-2xl md:text-3xl text-white transition-transform duration-600 inline-block group-hover:rotate-y-180 ${isArabic ? '' : 'tracking-[0.2em]'}`}>
+              {isArabic ? t('hero.title') : 'LUMIÈRE'}
             </span>
             <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#d4af37] transition-all duration-300 group-hover:w-full"></span>
           </a>

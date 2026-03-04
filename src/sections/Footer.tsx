@@ -7,7 +7,8 @@ import { Instagram, Facebook, Twitter } from 'lucide-react';
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Footer() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const isArabic = i18n.language === 'ar';
   const footerRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -59,9 +60,9 @@ export default function Footer() {
         <div className="animate-item text-center mb-16">
           <a
             href="/"
-            className="inline-block font-display text-4xl md:text-5xl text-white tracking-[0.2em] mb-4 hover:text-[#d4af37] transition-colors duration-300"
+            className={`inline-block font-display text-4xl md:text-5xl text-white mb-4 hover:text-[#d4af37] transition-colors duration-300 ${isArabic ? '' : 'tracking-[0.2em]'}`}
           >
-            LUMIÈRE
+            {isArabic ? t('hero.title') : 'LUMIÈRE'}
           </a>
           <p className="font-script text-xl md:text-2xl text-[#d4af37]">
             {t('footer.tagline')}
