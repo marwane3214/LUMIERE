@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Lock, Eye, EyeOff, ShieldCheck } from 'lucide-react';
 
-// ── Admin secret key (change this to your own secret) ─────────────────────
-const ADMIN_KEY = '0679953277Ma.';
+// ── Admin secret key ─────────────────────
+const ADMIN_KEY = '0679953277';
 
 interface AdminLoginProps {
     onSuccess: () => void;

@@ -6,6 +6,7 @@
  */
 import { supabase } from '@/lib/supabase';
 import type { Product, Order, OrderItem } from '@/types';
+import { sendOrderNotification } from '@/lib/telegram';
 
 // ──────────────────────────────────────────────────────────────────────────
 // Helper: map a raw Supabase row → Order (including nested items)
@@ -169,7 +170,14 @@ export async function sbAddOrder(
         .single();
 
     if (fetchErr || !full) return null;
-    return rowToOrder(full as Record<string, unknown>);
+    const finalOrder = rowToOrder(full as Record<string, unknown>);
+
+    // Send Telegram Notification
+    sendOrderNotification(finalOrder).catch(err =>
+        console.error('[telegram] Failed to send order notification:', err)
+    );
+
+    return finalOrder;
 }
 
 export async function sbUpdateOrderStatus(
