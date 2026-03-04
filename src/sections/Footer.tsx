@@ -45,32 +45,6 @@ export default function Footer() {
     return () => ctx.revert();
   }, []);
 
-  const shopLinks = [
-    { label: t('footer.links.rings'), href: '#categories' },
-    { label: t('footer.links.necklaces'), href: '#categories' },
-    { label: t('footer.links.earrings'), href: '#categories' },
-    { label: t('footer.links.bracelets'), href: '#categories' },
-  ];
-
-  const companyLinks = [
-    { label: t('footer.links.about'), href: '#about' },
-    { label: t('footer.links.story'), href: '#about' },
-    { label: t('footer.links.careers'), href: '#' },
-    { label: t('footer.links.press'), href: '#' },
-  ];
-
-  const supportLinks = [
-    { label: t('footer.links.faq'), href: '#' },
-    { label: t('footer.links.shipping'), href: '#' },
-    { label: t('footer.links.returns'), href: '#' },
-    { label: t('footer.links.contactUs'), href: '#contact' },
-  ];
-
-  const contactLinks = [
-    { label: 'contact@lumiere.com', href: 'mailto:contact@lumiere.com' },
-    { label: '+212 5XX-XXXXXX', href: 'tel:+2125XXXXXXXX' },
-    { label: 'Casablanca, Morocco', href: '#' },
-  ];
 
   return (
     <footer
